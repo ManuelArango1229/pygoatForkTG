@@ -1,0 +1,23 @@
+name: DevSecOps – PyGoat
+
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+
+jobs:
+  security:
+    uses: ManuelArango1229/devsecops-engine-/.github/workflows/reusable-devsecops.yml@main
+    with:
+      target_image:    'pygoat/pygoat:latest'
+      target_port:     '8000'
+      service_name:    'pygoat'
+      criticality:     'high'
+      environment:     'staging'
+      source_repo:     'ManuelArango1229/PyGoatForkTG'
+      source_repo_ref: 'master'
+      language:        'python'
+      use_ghcr:        false
+    secrets:
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+      GHCR_TOKEN:   ${{ secrets.GITHUB_TOKEN }}
